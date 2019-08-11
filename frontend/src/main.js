@@ -6,11 +6,13 @@ import router from './router'
 import store from './store'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import $ from 'jquery'
 
+window.$ = $
 
 Vue.config.productionTip = false
 Vue.use(Vuetify);
-
+// Vue.use($)
 // const opts = {
 //   theme: {
 //     dark: true
