@@ -25,6 +25,7 @@ public class PlaceSAXHandler extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (qName.equals("item")) {
             place = new Place();
+            place.setImgurl("../assets/image/warning.png");
         }
     }
 
@@ -82,7 +83,7 @@ public class PlaceSAXHandler extends DefaultHandler {
             place.setInsttCode(temp);
         } else if (qName.equals("insttNm")) {
             place.setInsttNm(temp);
-        } else if (qName.equals("item")){
+        } else if (qName.equals("item")) {
             list.add(place);
         }
     }

@@ -1,8 +1,15 @@
 <template>
-  <v-container>
+  <v-container style="display:block">
     <v-layout row wrap pa-5>
-      <v-flex xs12 md4 v-for="place in placeList" :key="place.name">
-        <Place :key="place.name" :name="place.name" :description="place.description"></Place>
+      <v-flex xs12 md4 v-for="place in placeList" :key="place.id">
+        <Place
+          :key="place.id"
+          :p="place"
+          :id="place.id"
+          :name="place.fcltyNm"
+          :address="place.rdnmadr"
+          :imgurl="getUrl(place.imgurl)"
+        ></Place>
       </v-flex>
     </v-layout>
   </v-container>
@@ -13,6 +20,7 @@ import PlaceService from "../services/placeService";
 import Place from "./Place.vue";
 export default {
   name: "PlaceList",
+  props: ["inputData"],
   data() {
     return {
       placeList: []
@@ -25,18 +33,15 @@ export default {
     this.getPlaces();
   },
   methods: {
+    getUrl(imgurl) {
+      if (imgurl == "../assets/image/warning.png") {
+        return require("../assets/image/warning.png");
+      } else return imgurl;
+    },
     async getPlaces() {
-      this.placeList = [
-        { name: "부산 박물관", description: "부산에 있는 박물관이다." },
-        { name: "서울 미술관", description: "서울에 있는 미술관이다." },
-        { name: "대전 박물관", description: "부산에 있는 박물관이다." },
-        { name: "대구 미술관", description: "서울에 있는 미술관이다." },
-        { name: "인천 박물관", description: "부산에 있는 박물관이다." },
-        { name: "구리 미술관", description: "서울에 있는 미술관이다." },
-        { name: "노원 박물관", description: "부산에 있는 박물관이다." },
-        { name: "역삼 미술관", description: "서울에 있는 미술관이다." }
-      ];
-      //   this.placeList = await PlaceService.getPlaces();
+      this.placeList = await PlaceService.getPlacesByFcltyNmLike(
+        this.inputData
+      );
     }
   }
 };

@@ -2,12 +2,19 @@ package com.nagaza.document;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * Place
  */
+@Document(collection = "place")
 public class Place implements Serializable {
 	static final long serialVersionUID = 1L;
 
+	@Id
+	private String id;
+	private String imgurl;
 	private String fcltyNm;
 	private String fcltyType;
 	private String rdnmadr;
@@ -38,13 +45,15 @@ public class Place implements Serializable {
 	public Place() {
 	}
 
-	public Place(String fcltyNm, String fcltyType, String rdnmadr, String lnmadr, String latitude, String hardness,
-			String operPhoneNumber, String operInstitutionNm, String homepageUrl, String fcltyInfo,
-			String weekdayOperOpenHhmm, String weekdayOperColseHhmm, String holidayOperOpenHhmm,
+	public Place(String id, String imgurl, String fcltyNm, String fcltyType, String rdnmadr, String lnmadr,
+			String latitude, String hardness, String operPhoneNumber, String operInstitutionNm, String homepageUrl,
+			String fcltyInfo, String weekdayOperOpenHhmm, String weekdayOperColseHhmm, String holidayOperOpenHhmm,
 			String holidayCloseOpenHhmm, String rstdeInfo, String adultChrge, String yngbgsChrge, String childChrge,
 			String etcChrgeInfo, String fcltyIntrcn, String trnsportInfo, String phoneNumber, String institutionNm,
 			String referenceDate, String insttCode, String insttNm) {
 		super();
+		this.id = id;
+		this.imgurl = imgurl;
 		this.fcltyNm = fcltyNm;
 		this.fcltyType = fcltyType;
 		this.rdnmadr = rdnmadr;
@@ -71,6 +80,34 @@ public class Place implements Serializable {
 		this.referenceDate = referenceDate;
 		this.insttCode = insttCode;
 		this.insttNm = insttNm;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the imgurl
+	 */
+	public String getImgurl() {
+		return imgurl;
+	}
+
+	/**
+	 * @param imgurl the imgurl to set
+	 */
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
 	}
 
 	public String getFcltyNm() {
@@ -283,6 +320,6 @@ public class Place implements Serializable {
 
 	@Override
 	public String toString() {
-		return this.fcltyNm + "  ";
+		return "[" + this.id + " , " + this.fcltyNm + " ] ";
 	}
 }

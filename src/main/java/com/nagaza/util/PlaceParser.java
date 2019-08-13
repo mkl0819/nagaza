@@ -6,7 +6,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 import com.nagaza.document.Place;
 
-
 /**
  * PlaceParser
  */
@@ -16,10 +15,15 @@ public class PlaceParser {
     // private StringBuilder xml;
 
     private List<Place> list;
+    private int totalCount;
 
-    public PlaceParser(String[] requestParams) {
+    public PlaceParser(String[] requestParams, String method) {
         this.requestParams = requestParams;
-        loadData();
+        if (method == "data") {
+            loadData();
+        } else if (method == "count") {
+            loadCount();
+        }
     }
 
     private void loadData() {
@@ -37,6 +41,21 @@ public class PlaceParser {
         }
     }
 
+    private void loadCount() {
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        try {
+            SAXParser parser = factory.newSAXParser();
+            PlaceCountSAXHandler counthandler = new PlaceCountSAXHandler();
+            ApiRequest apirequest = new ApiRequest(requestParams);
+
+            requestURL = apirequest.getRequestURL();
+            parser.parse(requestURL, counthandler);
+            totalCount = counthandler.getTotalCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * @return the list
      */
@@ -49,5 +68,12 @@ public class PlaceParser {
      */
     public void setList(List<Place> list) {
         this.list = list;
+    }
+
+    /**
+     * @return the totalCount
+     */
+    public int getTotalCount() {
+        return totalCount;
     }
 }

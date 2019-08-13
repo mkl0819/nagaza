@@ -11,8 +11,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface PlaceService {
-    // String findAll();
+
+    int loadData();
+
     List<Place> findAll();
+
+    List<String> findAllName();
+
     List<Place> findByFcltyNm(String fcltyNm);
-    
+
+    List<Place> findByFcltyNmLike(String fcltyNm);
+
 }
